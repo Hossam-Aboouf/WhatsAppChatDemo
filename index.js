@@ -8,7 +8,7 @@ const app = express().use(parser.json());
 const sys_verify_token = process.env.Token;
 
 app.listen(process.env.PORT, ()=>{
-    console.log('Hello, World')
+    console.log(`App is up and listen on port ${process.env.PORT}`);
 });
 
 // Subscribe method
@@ -63,5 +63,5 @@ app.post('/webhook', (req, res)=>{
 });
 
 app.get('/', (req,res)=>{
-    res.status(200).send('APIs Run Successfully')
+    res.status(200).send('App is runing...')
 });
