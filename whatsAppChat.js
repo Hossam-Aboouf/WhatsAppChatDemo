@@ -7,7 +7,7 @@ const app = express().use(parser.json());
 // system verification token (from config file)
 const sys_verify_token = process.env.Token;
 
-app.listen(process.env.PORT|8080, ()=>{
+app.listen(process.env.PORT, ()=>{
     console.log('Hello, World')
 });
 
