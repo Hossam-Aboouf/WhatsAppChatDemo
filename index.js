@@ -44,10 +44,10 @@ app.post('/webhook', (req, res)=>{
     let config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: 'https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/messages',
+    url: 'https://graph.facebook.com/{{Version}}/{{Phone_Number_ID}}/messages',
     headers: { 
         'Content-Type': 'application/json', 
-        'Authorization': 'Bearer {{User-Access-Token}}'
+        'Authorization': 'Bearer {{User_Access_Token}}'
     },
     data : data
     };
