@@ -2,10 +2,10 @@
   "name": "whatsapp-business-chat",
   "version": "1.0.0",
   "description": "",
-  "main": "whatsAppChat.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "whatsAppChat.js"
+    "start": "indext.js"
   },
   "author": "",
   "license": "ISC",
