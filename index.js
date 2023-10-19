@@ -30,7 +30,7 @@ app.get('/webhook', (req, res)=>{
 // Send message method
 app.post('/webhook', (req, res)=>{
     console.log('log from post /webhook send message endpoint');
-    console.log(req.body['entry']);
+    console.log(JSON.stringify(req.body.entry[0].changes));
     let access_token = ''; // depend on user account
     let phone_number_id = ''; // depend on user acount
 
