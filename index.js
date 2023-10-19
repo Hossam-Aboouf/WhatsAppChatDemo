@@ -31,24 +31,22 @@ app.get('/webhook', (req, res)=>{
 app.post('/webhook', (req, res)=>{
     console.log('log from post /webhook send message endpoint');
     console.log(JSON.stringify(req.body.entry[0].changes));
-    let access_token = ''; // depend on user account
-    let phone_number_id = ''; // depend on user acount
 
     let data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
-        "to": "{{Recipient-Phone-Number}}",
+        "to": `${req.body.entry[0].changes[0].value.messages[0].from}`,
         "type": "text",
         "text": {
           "preview_url": false,
-          "body": "This is test message"
+          "body": `This is test message ${req.body.entry[0].changes[0].value.messages[0].text.body}`
         }
     });
       
     let config = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: 'https://graph.facebook.com/{{Version}}/{{Phone_Number_ID}}/messages',
+    url: `https://graph.facebook.com/{{Version}}/${req.body.entry[0].changes[0].value.metadata.phone_number_id}/messages`,
     headers: { 
         'Content-Type': 'application/json', 
         'Authorization': 'Bearer {{User_Access_Token}}'
