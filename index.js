@@ -18,6 +18,8 @@ app.get('/webhook', (req, res)=>{
     let hub_verify_token = req.query['hub.verify_token'];
 
     if(hubMode === 'subscribe' & hub_verify_token === sys_verify_token){
+        console.log('log from get /webhook for subscribtion endpoint');
+        console.log(req);
         res.status(200).send(hub_challenge);
     }
     else{
@@ -27,6 +29,8 @@ app.get('/webhook', (req, res)=>{
 
 // Send message method
 app.post('/webhook', (req, res)=>{
+    console.log('log from post /webhook send message endpoint');
+    console.log(req);
     let access_token = ''; // depend on user account
     let phone_number_id = ''; // depend on user acount
 
@@ -37,7 +41,7 @@ app.post('/webhook', (req, res)=>{
         "type": "text",
         "text": {
           "preview_url": false,
-          "body": "text-message-content"
+          "body": "This is test message"
         }
     });
       
