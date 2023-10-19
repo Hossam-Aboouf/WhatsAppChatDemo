@@ -8,7 +8,7 @@ const app = express().use(parser.json());
 const sys_verify_token = process.env.Token;
 
 app.listen(process.env.PORT, ()=>{
-    console.log(`App is up and listen on port ${process.env.PORT}`);
+    console.log(`App is up and listen to port ${process.env.PORT}`);
 });
 
 // Subscribe method
