@@ -30,17 +30,16 @@ app.get('/webhook', (req, res)=>{
 // Send message method
 app.post('/webhook', (req, res)=>{
     console.log('log from post /webhook send message endpoint');
-    let req_body = JSON.stringify(req.body);
-    console.log(req_body);
+    console.log(JSON.stringify(req.body, null, 2));
     
     if(req_body.object & req_body.entry){
         console.log('request body contain object and entry parameters');
 
         if(
-            req_body.entry[0].changes & 
-            req_body.entry[0].changes[0].value &
-            req_body.entry[0].changes[0].value.messages &
-            req_body.entry[0].changes[0].value.messages[0].from
+            req.body.entry[0].changes & 
+            req.body.entry[0].changes[0].value &
+            req.body.entry[0].changes[0].value.messages &
+            req.body.entry[0].changes[0].value.messages[0].from
         ){
             let data = JSON.stringify({
                 "messaging_product": "whatsapp",
@@ -65,6 +64,7 @@ app.post('/webhook', (req, res)=>{
             };
               
             axios.request(config).then((response) => {
+                console.log('')
                 console.log(JSON.stringify(response.data));
                 res.status(200);
             }).catch((error) => {
@@ -78,8 +78,8 @@ app.post('/webhook', (req, res)=>{
         console.log('================================================');
     }else{
         console.log('Some of object or entry prameters are messing or map to false value.');
-        console.log(`Object prameter (value): ${req_body.object}`);
-        console.log(`Entry prameter (value): ${req_body.entry}`);
+        console.log(`Object prameter (value): ${req.body.object}`);
+        console.log(`Entry prameter (value): ${req.body.entry}`);
     }
 });
 
