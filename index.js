@@ -30,38 +30,59 @@ app.get('/webhook', (req, res)=>{
 // Send message method
 app.post('/webhook', (req, res)=>{
     console.log('log from post /webhook send message endpoint');
-    console.log(JSON.stringify(req.body.entry[0].changes));
+    let req_body = JSON.stringify(req.body);
+    console.log(req_body);
+    
+    if(req_body.object & req_body.entry){
+        console.log('request body contain object and entry parameters');
 
-    let data = JSON.stringify({
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": `${req.body.entry[0].changes[0].value.messages[0].from}`,
-        "type": "text",
-        "text": {
-          "preview_url": false,
-          "body": `This is test message ${req.body.entry[0].changes[0].value.messages[0].text.body}`
-        }
-    });
-      
-    let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: `https://graph.facebook.com/${process.env.VERSION}/${req.body.entry[0].changes[0].value.metadata.phone_number_id}/messages`,
-        headers: { 
-            'Content-Type': 'application/json', 
-            'Authorization': `Bearer ${process.env.User_Access_Token}`
-        },
-        data : data
-    };
-      
-    axios.request(config).then((response) => {
-        console.log(JSON.stringify(response.data));
-    }).catch((error) => {
-        console.log(error);
-    });
-    console.log('================================================')
+        if(
+            req_body.entry[0].changes & 
+            req_body.entry[0].changes[0].value &
+            req_body.entry[0].changes[0].value.messages &
+            req_body.entry[0].changes[0].value.messages[0].from
+        ){
+            let data = JSON.stringify({
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": `${req.body.entry[0].changes[0].value.messages[0].from}`,
+                "type": "text",
+                "text": {
+                  "preview_url": false,
+                  "body": `This is test message ${req.body.entry[0].changes[0].value.messages[0].text.body}`
+                }
+            });
+              
+            let config = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: `https://graph.facebook.com/${process.env.VERSION}/${req.body.entry[0].changes[0].value.metadata.phone_number_id}/messages`,
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': `Bearer ${process.env.User_Access_Token}`
+                },
+                data : data
+            };
+              
+            axios.request(config).then((response) => {
+                console.log(JSON.stringify(response.data));
+                res.status(200);
+            }).catch((error) => {
+                console.log(error);
+                res.status(501);
+            });
+
+        } else{
+            
+        }    
+        console.log('================================================');
+    }else{
+        console.log('Some of object or entry prameters are messing or map to false value.');
+        console.log(`Object prameter (value): ${req_body.object}`);
+        console.log(`Entry prameter (value): ${req_body.entry}`);
+    }
 });
 
 app.get('/', (req,res)=>{
-    res.status(200).send('App is runing...')
+    res.status(200).send('App is runing...');
 });
