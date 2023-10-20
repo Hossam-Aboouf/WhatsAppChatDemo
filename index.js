@@ -72,16 +72,16 @@ app.post('/webhook', (req, res)=>{
                 res.status(501);
             });
 
-        }else{
+        } else{
             
         }
+        res.status(200);
         console.log('================================================');
     }else{
         console.log('Some of object or entry prameters are messing or map to false value.');
         console.log(`Object prameter (value): ${req.body.object}`);
         console.log(`Entry prameter (value): ${req.body.entry}`);
     }
-    res.status(200);
 });
 
 app.get('/', (req,res)=>{
