@@ -23,8 +23,9 @@ app.get('/webhook', (req, res)=>{
         res.status(200).send(hub_challenge);
     }
     else{
-        res.status(403);
+        res.sendStatus(403);
     }
+    return;
 });
 
 // Send message method
@@ -75,15 +76,17 @@ app.post('/webhook', (req, res)=>{
         } else{
             
         }
-        res.status(200);
+        res.sendStatus(200);
         console.log('================================================');
     }else{
         console.log('Some of object or entry prameters are messing or map to false value.');
         console.log(`Object prameter (value): ${req.body.object}`);
         console.log(`Entry prameter (value): ${req.body.entry}`);
     }
+    return;
 });
 
 app.get('/', (req,res)=>{
     res.status(200).send('App is runing...');
+    return;
 });
