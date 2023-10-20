@@ -44,24 +44,22 @@ app.post('/webhook', (req, res)=>{
     });
       
     let config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: `https://graph.facebook.com/${process.env.VERSION}/${req.body.entry[0].changes[0].value.metadata.phone_number_id}/messages`,
-    headers: { 
-        'Content-Type': 'application/json', 
-        'Authorization': `Bearer ${process.env.User_Access_Token}`
-    },
-    data : data
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `https://graph.facebook.com/${process.env.VERSION}/${req.body.entry[0].changes[0].value.metadata.phone_number_id}/messages`,
+        headers: { 
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer ${process.env.User_Access_Token}`
+        },
+        data : data
     };
       
-    axios.request(config)
-    .then((response) => {
-    console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-    console.log(error);
+    axios.request(config).then((response) => {
+        console.log(JSON.stringify(response.data));
+    }).catch((error) => {
+        console.log(error);
     });
-
+    console.log('================================================')
 });
 
 app.get('/', (req,res)=>{
