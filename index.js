@@ -32,13 +32,13 @@ app.post('/webhook', (req, res)=>{
     console.log('log from post /webhook send message endpoint');
     console.log(JSON.stringify(req.body, null, 2));
     
-    if(req.body.object & req.body.entry){
+    if(req.body.object && req.body.entry){
         console.log('request body contain object and entry parameters');
 
         if(
-            req.body.entry[0].changes & 
-            req.body.entry[0].changes[0].value &
-            req.body.entry[0].changes[0].value.messages &
+            req.body.entry[0].changes &&
+            req.body.entry[0].changes[0].value &&
+            req.body.entry[0].changes[0].value.messages &&
             req.body.entry[0].changes[0].value.messages[0].from
         ){
             let data = JSON.stringify({
