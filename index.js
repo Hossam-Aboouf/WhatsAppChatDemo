@@ -67,16 +67,15 @@ app.post('/webhook', (req, res)=>{
             axios.request(config).then((response) => {
                 console.log('================hello from axios ========================')
                 console.log(JSON.stringify(response.data));
-                res.status(200);
+                res.sendStatus(200);
             }).catch((error) => {
                 console.log(error);
-                res.status(501);
+                res.sendStatus(501);
             });
 
         } else{
             
         }
-        res.sendStatus(200);
         console.log('================================================');
     }else{
         console.log('Some of object or entry prameters are messing or map to false value.');
