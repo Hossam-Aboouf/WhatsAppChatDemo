@@ -17,7 +17,7 @@ app.get('/webhook', (req, res)=>{
     let hub_challenge = req.query['hub.challenge'];
     let hub_verify_token = req.query['hub.verify_token'];
 
-    if(hubMode === 'subscribe' & hub_verify_token === sys_verify_token){
+    if(hubMode === 'subscribe' && hub_verify_token === sys_verify_token){
         console.log('log from get /webhook for subscribtion endpoint');
         console.log(req);
         res.status(200).send(hub_challenge);
