@@ -76,6 +76,7 @@ app.post('/webhook', (req, res)=>{
         } else{
             
         }
+        res.sendStatus(200);
         console.log('================================================');
     }else{
         console.log('Some of object or entry prameters are messing or map to false value.');
