@@ -13,6 +13,8 @@ const app = express().use(parser.json());
 const server = http.createServer(app);
 const io = socketIo(server);
 
+let socket;
+
 
 app.use(express.static('static'));
 app.set('view engine', 'ejs');
@@ -86,7 +88,7 @@ app.post('/webhook', (req, res)=>{
             //     console.log(error);
             //     res.sendStatus(501);
             // });
-            socket.emit('sendMessage', {
+            this.socket.emit('sendMessage', {
                 value: req.body.entry[0].changes[0].value.messages[0].text.body
             });
 
@@ -109,8 +111,9 @@ app.get('/', (req,res)=>{
 
 io.on('connection', (socket) => {
     console.log('A user connected');
-    // You can emit messages to the connected clients here
+    this.socket = socket;
 
+    // You can emit messages to the connected clients here
     socket.on('sendMessage', (message) => {
         // Process the message and if needed save it in data store
         // Then emit it to the UI
