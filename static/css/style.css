@@ -1,0 +1,17 @@
+.media{
+    background-color: whitesmoke;
+}
+
+.logo{
+    width: 75px;
+    margin: 10px;
+    float: left;
+}
+
+.media-body{
+    float: left;
+}
+
+.chat_title{
+    margin: 10px;
+}
