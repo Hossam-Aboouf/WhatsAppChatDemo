@@ -28,7 +28,7 @@ socket.on('sendMessage', (message) => {
         var newMessageElement = document.createElement('div');
         newMessageElement.style.textAlign = 'left';
         newMessageElement.style.margin = '10px';
-        newMessageElement.innerHTML = `<span>Customer</span> <br> <span>${message}</span`;
+        newMessageElement.innerHTML = `<span>Patient</span> <br> <span>${message}</span`;
         // io.emit('sendMessage', message);
         chatContainer.appendChild(newMessageElement);
         chatContainer.scrollTop = chatContainer.scrollHeight;
