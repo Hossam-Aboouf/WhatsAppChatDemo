@@ -1,8 +1,15 @@
+// add config file
 require('dotenv').config();
+
+// import required backages
+const ejs = require('ejs');
 const axios = require('axios');
 const express = require('express');
 const parser = require('body-parser');
 const app = express().use(parser.json());
+
+app.use(express.static('static'));
+app.set('view engine', 'ejs');
 
 // system verification token (from config file)
 const sys_verify_token = process.env.Token;
@@ -87,6 +94,5 @@ app.post('/webhook', (req, res)=>{
 });
 
 app.get('/', (req,res)=>{
-    res.status(200).send('App is runing...');
-    return;
+    res.render('pages/index');
 });
