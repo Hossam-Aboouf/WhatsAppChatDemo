@@ -158,9 +158,9 @@ io.on('connection', (socket) => {
 
     });
 
-    socket.emit('sendMessage', {
-        value: 'Hello how can I help you (this is an auto sent message'
-    });
+    // socket.emit('sendMessage', {
+    //     value: 'Hello how can I help you (this is an auto sent message'
+    // });
 });
 
 
