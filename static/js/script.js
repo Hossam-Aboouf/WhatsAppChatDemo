@@ -14,6 +14,7 @@ function sendMessage(e) {
         newMessageElement.style.margin = '10px';
         newMessageElement.innerHTML = `<span>You</span> <br> <span>${message}</span`;
         socket.emit('sendMessage', message);
+        chatContainer.scrollIntoView();
         chatContainer.appendChild(newMessageElement);
         input.value = "";
     }
@@ -30,5 +31,6 @@ socket.on('sendMessage', (message) => {
         newMessageElement.innerHTML = `<span>Customer</span> <br> <span>${message}</span`;
         // io.emit('sendMessage', message);
         chatContainer.appendChild(newMessageElement);
+        chatContainer.scrollIntoView();
     }
 });
