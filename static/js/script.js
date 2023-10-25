@@ -34,3 +34,10 @@ socket.on('sendMessage', (message) => {
         chatContainer.scrollIntoView();
     }
 });
+
+document.getElementById('messageTxt').onkeydown = (e) => {
+    if(e.key==='Enter'){
+        e.preventDefault();
+        sendMessage(e);
+    } 
+};
