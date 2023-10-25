@@ -1,3 +1,7 @@
+.container{
+    padding: 0;
+}
+
 .media{
     background-color: whitesmoke;
 }
@@ -13,5 +17,10 @@
 }
 
 .chat_title{
-    margin: 10px;
+    margin-top: 20px;
+}
+
+#chatContainer{
+    height: 300px;
+    padding: 0;
 }
