@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io('https://whats-app-chat-1ed9508c75e0.herokuapp.com/');
 const chatContainer = document.getElementById('chatContainer');
 
 
