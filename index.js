@@ -55,35 +55,39 @@ app.post('/webhook', (req, res)=>{
             req.body.entry[0].changes[0].value.messages &&
             req.body.entry[0].changes[0].value.messages[0].from
         ){
-            let data = JSON.stringify({
-                "messaging_product": "whatsapp",
-                "recipient_type": "individual",
-                "to": `${req.body.entry[0].changes[0].value.messages[0].from}`,
-                "type": "text",
-                "text": {
-                  "preview_url": false,
-                  "body": `This is test message ${req.body.entry[0].changes[0].value.messages[0].text.body}`
-                }
-            });
+            // let data = JSON.stringify({
+            //     "messaging_product": "whatsapp",
+            //     "recipient_type": "individual",
+            //     "to": `${req.body.entry[0].changes[0].value.messages[0].from}`,
+            //     "type": "text",
+            //     "text": {
+            //       "preview_url": false,
+            //       "body": `This is test message ${req.body.entry[0].changes[0].value.messages[0].text.body}`
+            //     }
+            // });
               
-            let config = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: `https://graph.facebook.com/${process.env.VERSION}/${req.body.entry[0].changes[0].value.metadata.phone_number_id}/messages`,
-                headers: { 
-                    'Content-Type': 'application/json', 
-                    'Authorization': `Bearer ${process.env.User_Access_Token}`
-                },
-                data : data
-            };
+            // let config = {
+            //     method: 'post',
+            //     maxBodyLength: Infinity,
+            //     url: `https://graph.facebook.com/${process.env.VERSION}/${req.body.entry[0].changes[0].value.metadata.phone_number_id}/messages`,
+            //     headers: { 
+            //         'Content-Type': 'application/json', 
+            //         'Authorization': `Bearer ${process.env.User_Access_Token}`
+            //     },
+            //     data : data
+            // };
               
-            axios.request(config).then((response) => {
-                console.log('================hello from axios ========================')
-                console.log(JSON.stringify(response.data));
-                res.sendStatus(200);
-            }).catch((error) => {
-                console.log(error);
-                res.sendStatus(501);
+            
+            // axios.request(config).then((response) => {
+            //     console.log('================hello from axios ========================')
+            //     console.log(JSON.stringify(response.data));
+            //     res.sendStatus(200);
+            // }).catch((error) => {
+            //     console.log(error);
+            //     res.sendStatus(501);
+            // });
+            socket.emit('sendMessage', {
+                value: req.body.entry[0].changes[0].value.messages[0].text.body
             });
 
         } else{
@@ -111,10 +115,48 @@ io.on('connection', (socket) => {
         // Process the message and if needed save it in data store
         // Then emit it to the UI
         console.log(message);
+
+        // "to": `${req.body.entry[0].changes[0].value.messages[0].from}`
+        // "body": `This is test message ${req.body.entry[0].changes[0].value.messages[0].text.body}`
+        // ${req.body.entry[0].changes[0].value.metadata.phone_number_id}
+        let data = JSON.stringify({
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": '01143290414',
+            "type": "text",
+            "text": {
+              "preview_url": false,
+              "body": message
+            }
+        });
+          
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `https://graph.facebook.com/${process.env.VERSION}/151878724665167/messages`,
+            headers: { 
+                'Content-Type': 'application/json', 
+                'Authorization': `Bearer ${process.env.User_Access_Token}`
+            },
+            data : data
+        };
+          
+        
+        axios.request(config).then((response) => {
+            console.log('================hello from axios ========================')
+            console.log(JSON.stringify(response.data));
+            // res.sendStatus(200);
+        }).catch((error) => {
+            console.log(error);
+            // res.sendStatus(501);
+        });
+
+
+
     });
 
     socket.emit('sendMessage', {
-        value: 'Hello Client'
+        value: 'Hello how can I help you (this is an auto sent message'
     });
 });
 
