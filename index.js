@@ -3,10 +3,16 @@ require('dotenv').config();
 
 // import required backages
 const ejs = require('ejs');
+const http = require('http');
 const axios = require('axios');
 const express = require('express');
+const socketIo = require('socket.io');
 const parser = require('body-parser');
 const app = express().use(parser.json());
+
+const server = http.createServer(app);
+const io = socketIo(server);
+
 
 app.use(express.static('static'));
 app.set('view engine', 'ejs');
@@ -14,7 +20,7 @@ app.set('view engine', 'ejs');
 // system verification token (from config file)
 const sys_verify_token = process.env.Token;
 
-app.listen(process.env.PORT, ()=>{
+server.listen(process.env.PORT, ()=>{
     console.log(`App is up and listen to port ${process.env.PORT}`);
 });
 
@@ -96,3 +102,27 @@ app.post('/webhook', (req, res)=>{
 app.get('/', (req,res)=>{
     res.render('pages/index');
 });
+
+io.on('connection', (socket) => {
+    console.log('A user connected');
+    // You can emit messages to the connected clients here
+
+    socket.on('sendMessage', (message) => {
+        // Process the message and if needed save it in data store
+        // Then emit it to the UI
+        console.log(message);
+    });
+
+    socket.emit('sendMessage', {
+        value: 'Hello Client'
+    });
+});
+
+
+const possibleMessages = [
+    {message:'', response: ''}
+];
+
+function chatbotAutoResponse(message){
+    possibleMessages.filter(val => val.message.toLowerCase().includes(message.toLowerCase()));
+}
