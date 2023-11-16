@@ -110,7 +110,7 @@ app.get('/', (req,res)=>{
 });
 
 io.on('connection', (socket) => {
-    console.log('A user connected');
+    console.log(`A user connected with session id: ${socket.id}`);
     this.socket = socket;
 
     // You can emit messages to the connected clients here
